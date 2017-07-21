@@ -28,3 +28,5 @@
 
 // The gzip footer size really is fixed.
 #define GZIP_FOOTER_LEN   8
+
+int imgdiff_fn(int argc, char** argv);

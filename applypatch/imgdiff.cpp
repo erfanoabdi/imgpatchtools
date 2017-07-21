@@ -809,7 +809,7 @@ void DumpChunks(ImageChunk* chunks, int num_chunks) {
     }
 }
 
-int main2(int argc, char** argv) {
+int imgdiff_fn(int argc, char** argv) {
   int zip_mode = 0;
 
   if (argc >= 2 && strcmp(argv[1], "-z") == 0) {

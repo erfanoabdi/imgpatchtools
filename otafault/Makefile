@@ -12,7 +12,7 @@ endif
 
 CFLAGS = -ffunction-sections -O3 -std=c++11
 LDFLAGS = -Wl
-INC = -I. -I../include/
+INC = -I. -I../include/ -Iinclude/
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)

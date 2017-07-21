@@ -7,9 +7,8 @@
 //
 
 #include <iostream>
+#include "applypatch/imgdiff.h"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main(int argc, char * argv[]) {
+    return imgdiff_fn(argc, argv);
 }

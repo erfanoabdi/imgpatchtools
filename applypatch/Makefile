@@ -10,7 +10,7 @@ EXE = .exe
 RM = del
 endif
 
-CFLAGS = -ffunction-sections -O3 -std=c++11 -lssl -lcrypto -lz -lbz2
+CFLAGS = -ffunction-sections -O3 -std=c++11
 LDFLAGS = -lssl -lcrypto -lz -lbz2
 INC = -I. -Iinclude/ -I../include/ -I/usr/local/include/ -I../
 
@@ -18,10 +18,10 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
     LDFLAGS += -dead_strip
 else
-    LDFLAGS += 
+    LDFLAGS +=
 endif
 
-all:bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o 
+all:bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o
 #imgdiff$(EXE)
 
 bspatch.o:bspatch.cpp
@@ -46,4 +46,4 @@ freecache.o:freecache.cpp
 	$(CROSS_COMPILE)$(PP) -o $@ $^ $(LDFLAGS) -s
 
 clean:
-	$(RM) bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o 
+	$(RM) bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o
