@@ -32,5 +32,4 @@
 *.app
 
 cache
-log.txt
-blockimg
+Progress.txt
