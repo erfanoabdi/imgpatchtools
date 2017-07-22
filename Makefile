@@ -10,7 +10,7 @@ EXE = .exe
 RM = del
 endif
 
-CFLAGS = -ffunction-sections -O3 -std=c++11 
+CFLAGS = -ffunction-sections -O3 -std=c++11
 LDFLAGS = -lssl -lcrypto -lz -lbz2 -lpthread
 INC = -I. -Iinclude/ -I../include/ -I/usr/local/include/ -I../
 
@@ -57,4 +57,4 @@ ApplyPatchfn$(EXE):ApplyPatch.o applypatch/applypatch.o edify/expr.o android-bas
 
 clean:
 	find -name '*.o' -exec rm {} \;
-	$(RM) BlockImageVerify BlockImageUpdate imgdiff
+	$(RM) BlockImageVerify BlockImageUpdate imgdiff ApplyPatchfn BlockImageVerify.exe BlockImageUpdate.exe imgdiff.exe ApplyPatchfn.exe
