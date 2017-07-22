@@ -36,7 +36,9 @@ struct FileContents {
 // it to free up space.  If the expected source file doesn't exist, or
 // is corrupted, we look to see if this file contains the bits we want
 // and use it as the source instead.
-#define CACHE_TEMP_SOURCE "/cache/saved.file"
+#define CACHE_TEMP_SOURCE "cache/saved.file"
+#define CACHE_TEMP_DIR "cache"
+#define CACHE_DIR_MODE 0700
 
 typedef ssize_t (*SinkFn)(const unsigned char*, ssize_t, void*);
 

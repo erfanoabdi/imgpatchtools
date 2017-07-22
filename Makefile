@@ -10,7 +10,7 @@ EXE = .exe
 RM = del
 endif
 
-CFLAGS = -ffunction-sections -O3 -std=c++11
+CFLAGS = -ffunction-sections -O3 -std=c++11 
 LDFLAGS = -lssl -lcrypto -lz -lbz2 -lpthread
 INC = -I. -Iinclude/ -I../include/ -I/usr/local/include/ -I../
 
@@ -23,7 +23,7 @@ endif
 
 SUBDIRS = applypatch android-base edify minzip otafault blockimg
 
-all:sub BlockImageVerify.o BlockImageUpdate.o BlockImageVerify$(EXE) BlockImageUpdate$(EXE) imgdiff.o imgdiff$(EXE)
+all:sub BlockImageVerify.o BlockImageUpdate.o imgdiff.o ApplyPatch.o BlockImageVerify$(EXE) BlockImageUpdate$(EXE) imgdiff$(EXE) ApplyPatchfn$(EXE)
 
 sub:
 	for dir in $(SUBDIRS); do \
@@ -47,6 +47,12 @@ imgdiff.o:imgdiff.cpp
 	$(CROSS_COMPILE)$(PP) -o $@ $(CFLAGS) -c $< $(INC)
 
 imgdiff$(EXE):imgdiff.o edify/expr.o android-base/stringprintf.o android-base/strings.o minzip/Hash.o applypatch/bspatch.o applypatch/bsdiff.o applypatch/imgpatch.o applypatch/imgdiff.o applypatch/utils.o otafault/ota_io.o
+	$(CROSS_COMPILE)$(PP) -o $@ $^ $(LDFLAGS) -s
+
+ApplyPatch.o:ApplyPatch.cpp
+	$(CROSS_COMPILE)$(PP) -o $@ $(CFLAGS) -c $< $(INC)
+
+ApplyPatchfn$(EXE):ApplyPatch.o applypatch/applypatch.o edify/expr.o android-base/stringprintf.o android-base/strings.o minzip/Hash.o applypatch/bspatch.o applypatch/bsdiff.o applypatch/imgpatch.o applypatch/imgdiff.o applypatch/utils.o otafault/ota_io.o
 	$(CROSS_COMPILE)$(PP) -o $@ $^ $(LDFLAGS) -s
 
 clean:

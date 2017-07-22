@@ -21,7 +21,7 @@ else
     LDFLAGS +=
 endif
 
-all:bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o
+all:bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o applypatch.o
 #imgdiff$(EXE)
 
 bspatch.o:bspatch.cpp
@@ -42,8 +42,8 @@ utils.o:utils.cpp
 freecache.o:freecache.cpp
 	$(CROSS_COMPILE)$(PP) -o $@ $(CFLAGS) -c $< $(INC)
 
-#imgdiff$(EXE):imgdiff.o ../edify/expr.o ../android-base/stringprintf.o ../android-base/strings.o ../minzip/Hash.o bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o
-	$(CROSS_COMPILE)$(PP) -o $@ $^ $(LDFLAGS) -s
+applypatch.o:applypatch.cpp
+	$(CROSS_COMPILE)$(PP) -o $@ $(CFLAGS) -c $< $(INC)
 
 clean:
 	$(RM) bspatch.o bsdiff.o imgpatch.o imgdiff.o utils.o
