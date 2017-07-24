@@ -13,6 +13,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <string.h>
 
 #include <android-base/parseint.h>
 #include <android-base/strings.h>
