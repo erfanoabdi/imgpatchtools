@@ -65,9 +65,36 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
         patch_ptrs.push_back(&patch_value);
     }
     
+    std::string dirname = CACHE_TEMP_DIR;
+    struct stat sb;
+    int res = stat(dirname.c_str(), &sb);
+    
+    if (res == -1 && errno != ENOENT) {
+        printf("cache dir \"%s\" failed: %s\n",
+               dirname.c_str(), strerror(errno));
+        return -1;
+    } else if (res != 0) {
+        printf("creating cache dir %s\n", dirname.c_str());
+        res = mkdir(dirname.c_str(), CACHE_DIR_MODE);
+        
+        if (res != 0) {
+            printf("mkdir \"%s\" failed: %s\n",
+                   dirname.c_str(), strerror(errno));
+            return -1;
+        }
+        
+        // Created directory
+    }
+    
+    printf("cache dir: %s\n", dirname.c_str());
+    
     int result = applypatch(source_filename, target_filename,
                             target_sha1, target_size,
                             patchcount, patch_sha_str.data(), patch_ptrs.data(), NULL);
+    
+    if (rmdir(CACHE_TEMP_DIR) == -1) {
+        printf("rmdir \"%s\" failed\n", CACHE_TEMP_DIR);
+    }
     
     return result;
 }

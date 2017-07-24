@@ -559,29 +559,6 @@ int applypatch_check(const char* filename, int num_patches,
         // exists and matches the sha1 we're looking for, the check still
         // passes.
 
-            std::string dirname = CACHE_TEMP_DIR;
-            struct stat sb;
-            int res = stat(dirname.c_str(), &sb);
-            
-            if (res == -1 && errno != ENOENT) {
-                printf("cache dir \"%s\" failed: %s\n",
-                           dirname.c_str(), strerror(errno));
-                return -1;
-            } else if (res != 0) {
-                printf("creating cache dir %s\n", dirname.c_str());
-                res = mkdir(dirname.c_str(), CACHE_DIR_MODE);
-                
-                if (res != 0) {
-                    printf("mkdir \"%s\" failed: %s\n",
-                               dirname.c_str(), strerror(errno));
-                    return -1;
-                }
-                
-                // Created directory
-            }
-            
-            printf("cache dir: %s\n", dirname.c_str());
-            
         if (LoadFileContents(CACHE_TEMP_SOURCE, &file) != 0) {
             printf("failed to load cache file\n");
             return 1;
@@ -715,29 +692,6 @@ int applypatch(const char* source_filename,
         source_file.data.clear();
         printf("source file is bad; trying copy\n");
 
-        std::string dirname = CACHE_TEMP_DIR;
-        struct stat sb;
-        int res = stat(dirname.c_str(), &sb);
-        
-        if (res == -1 && errno != ENOENT) {
-            printf("cache dir \"%s\" failed: %s\n",
-                       dirname.c_str(), strerror(errno));
-            return -1;
-        } else if (res != 0) {
-            printf("creating cache dir %s\n", dirname.c_str());
-            res = mkdir(dirname.c_str(), CACHE_DIR_MODE);
-            
-            if (res != 0) {
-                printf("mkdir \"%s\" failed: %s\n",
-                           dirname.c_str(), strerror(errno));
-                return -1;
-            }
-            
-            // Created directory
-        }
-        
-        printf("cache dir: %s\n", dirname.c_str());
-        
         if (LoadFileContents(CACHE_TEMP_SOURCE, &copy_file) < 0) {
             // fail.
             printf("failed to read copy file\n");
