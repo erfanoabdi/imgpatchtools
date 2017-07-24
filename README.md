@@ -28,7 +28,7 @@ args:
 - `<system.patch.dat>` = patch stream from OTA/rom zip
 
 ```
-./ApplyPatchfn <file> <target> <tgt_sha1> <size> <init_sha1(1)> <patch(1)> <init_sha1(2)> <patch(2)>...
+./ApplyPatchfn <file> <target> <tgt_sha1> <size> <init_sha1(1)> <patch(1)> [init_sha1(2)] [patch(2)]...
 ```
 - `<file>` = source file from rom zip
 - `<target>` = target file (use "-" to patch source file)

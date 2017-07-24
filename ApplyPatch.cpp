@@ -101,7 +101,13 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
 
 int main(int argc, char * argv[]) {
     if (argc < 7 || (argc % 2) == 0) {
-        printf("usage: %s <file> <target> <tgt_sha1> <size> <init_sha1(s)> <patch(s)>\n",argv[0]);
+        printf("usage: %s <file> <target> <tgt_sha1> <size> <init_sha1(1)> <patch(1)> [init_sha1(2)] [patch(2)] ...\n\n",argv[0]);
+        printf("\t<file> = source file from rom zip\n");
+        printf("\t<target> = target file (use \"-\" to patch source file)\n");
+        printf("\t<tgt_sha1> = target SHA1 Sum after patching\n");
+        printf("\t<size> = file size\n");
+        printf("\t<init_sha1> = file SHA1 sum\n");
+        printf("\t<patch> = patch file (.p) from OTA zip\n");
         return 0;
     }
     
