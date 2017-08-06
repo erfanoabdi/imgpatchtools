@@ -25,7 +25,7 @@ endif
 
 SUBDIRS = applypatch android-base edify minzip otafault blockimg
 
-all:sub bindir BlockImageVerify.o BlockImageUpdate.o imgdiff.o ApplyPatch.o bin/BlockImageVerify$(EXE) bin/BlockImageUpdate$(EXE) bin/imgdiff$(EXE) bin/ApplyPatch$(EXE)
+all:sub bindir scriptp BlockImageVerify.o BlockImageUpdate.o imgdiff.o ApplyPatch.o bin/BlockImageVerify$(EXE) bin/BlockImageUpdate$(EXE) bin/imgdiff$(EXE) bin/ApplyPatch$(EXE)
 
 sub:
 	for dir in $(SUBDIRS); do \
@@ -34,6 +34,9 @@ sub:
 
 bindir:
 	mkdir -p bin
+
+scriptp:
+	cp scriptpatcher.sh bin/
 
 BlockImageVerify.o:BlockImageVerify.cpp
 	$(CROSS_COMPILE)$(PP) -o $@ $(CFLAGS) -c $< $(INC)
