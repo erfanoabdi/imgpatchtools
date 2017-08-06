@@ -37,6 +37,12 @@ args:
 - `<init_sha1>` = file SHA1 sum
 - `<patch>` = patch file (.p) from OTA zip
 
+```
+usage: ./scriptpatcher.sh <updater-script>
+```
+args:
+- `<updater-script>` = updater-script from OTA zip to patch recovery commands
+
 
 ## Example
 for example from updater-script of OTA we have:
@@ -54,6 +60,11 @@ This is equals of previous functions on PC with this tools:
 ~$ ./BlockImageUpdate system.img system.transfer.list system.new.dat system.patch.dat
 ~$ ./ApplyPatchfn boot.img - 0041a4df844d4b14c0085921d84572f48cc79ff4 33554432 f32a854298814c18b12d56412f6e3a31afc95e42
 ```
+scriptpatcher.sh will generate all commands automatically from updater script so run it like:
+```
+~$ ./scriptpatcher.sh META-INF/com/google/android/updater-script > fullpatch.sh
+```
+check fullpatch.sh your self, you need to provide all images and files in correct name and patch as mentioned in mount and other commands of fullpatch.sh
 
 
 ### Youtube
