@@ -30,10 +30,6 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
     if (!android::base::ParseUint(target_size_str, &target_size)) {
         printf("%s(): can't parse \"%s\" as byte count\n",
                    name, target_size_str);
-        free(source_filename);
-        free(target_filename);
-        free(target_sha1);
-        free(target_size_str);
         return kArgsParsingFailure;
     }
     
