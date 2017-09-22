@@ -25,19 +25,17 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
     char* target_filename = argv[2];
     char* target_sha1 = argv[3];
     char* target_size_str = argv[4];
+    char* bonus_filename = (argc % 2) == 0 ? argv[argc - 1] : NULL;
+    Value bonus_data;
     
     size_t target_size;
     if (!android::base::ParseUint(target_size_str, &target_size)) {
         printf("%s(): can't parse \"%s\" as byte count\n",
                    name, target_size_str);
-        free(source_filename);
-        free(target_filename);
-        free(target_sha1);
-        free(target_size_str);
         return kArgsParsingFailure;
     }
     
-    int patchcount = (argc-4) / 2;
+    int patchcount = (argc-5) / 2;
     
     std::vector<char*> patch_sha_str;
     std::vector<Value*> patch_ptrs;
@@ -66,6 +64,26 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
         patch_ptrs.push_back(&patch_value);
     }
     
+    if (bonus_filename != NULL) {
+        bonus_data.type = VAL_BLOB;
+
+        FILE *rm;
+        int length;
+        rm = fopen(bonus_filename, "r");
+        fseek (rm, 0, SEEK_END);
+        length = ftell (rm);
+        fseek (rm, 0, SEEK_SET);
+        bonus_data.data = (char*)malloc ((length+1)*sizeof(char));
+        
+        if (bonus_data.data)
+        {
+            fread (bonus_data.data, sizeof(char), length, rm);
+        }
+        fclose (rm);
+        
+        bonus_data.size = length;
+    }
+    
     std::string dirname = CACHE_TEMP_DIR;
     struct stat sb;
     int res = stat(dirname.c_str(), &sb);
@@ -91,7 +109,8 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
     
     int result = applypatch(source_filename, target_filename,
                             target_sha1, target_size,
-                            patchcount, patch_sha_str.data(), patch_ptrs.data(), NULL);
+                            patchcount, patch_sha_str.data(), patch_ptrs.data(),
+                            bonus_filename != NULL ? &bonus_data : NULL);
     
     if (rmdir(CACHE_TEMP_DIR) == -1) {
         printf("rmdir \"%s\" failed\n", CACHE_TEMP_DIR);
@@ -101,14 +120,15 @@ int ApplyPatchFn(const char* name, State* state, int argc, char * argv[]) {
 }
 
 int main(int argc, char * argv[]) {
-    if (argc < 7 || (argc % 2) == 0) {
-        printf("usage: %s <file> <target> <tgt_sha1> <size> <init_sha1(1)> <patch(1)> [init_sha1(2)] [patch(2)] ...\n\n",argv[0]);
+    if (argc < 7) {
+        printf("usage: %s <file> <target> <tgt_sha1> <size> <init_sha1(1)> <patch(1)> [init_sha1(2)] [patch(2)] ... [bonus]\n\n",argv[0]);
         printf("\t<file> = source file from rom zip\n");
         printf("\t<target> = target file (use \"-\" to patch source file)\n");
         printf("\t<tgt_sha1> = target SHA1 Sum after patching\n");
         printf("\t<size> = file size\n");
         printf("\t<init_sha1> = file SHA1 sum\n");
         printf("\t<patch> = patch file (.p) from OTA zip\n");
+        printf("\t<bonus> = bonus resource file\n");
         return 0;
     }
     
