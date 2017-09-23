@@ -1444,7 +1444,6 @@ static unsigned int HashString(const char *s) {
 static int PerformBlockImageUpdate(const char* name, State* state, int argc, char * argv[],
         const Command* commands, size_t cmdcount, bool dryrun) {
     CommandParameters params;
-    memset(&params, 0, sizeof(params));
     params.canwrite = !dryrun;
 
     printf("performing %s\n", dryrun ? "verification" : "update");
