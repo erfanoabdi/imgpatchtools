@@ -345,7 +345,7 @@ struct NewThreadInfo {
     pthread_cond_t cv;
 };
 
-static bool receive_new_data(const unsigned char* data, int size, void* cookie) {
+static bool receive_new_data(const unsigned char* data, long size, void* cookie) {
     NewThreadInfo* nti = reinterpret_cast<NewThreadInfo*>(cookie);
 
     while (size > 0) {
