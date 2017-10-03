@@ -77,12 +77,13 @@ int LoadFileContents(const char* filename, FileContents* file) {
     }
 
     if (stat(filename, &file->st) != 0) {
-        printf("failed to stat \"%s\": %s\n", filename, strerror(errno));
+        if (errno != 2)
+           printf("failed to stat \"%s\": %s(%d)\n", filename, strerror(errno), errno);
         return -1;
     }
 
     std::vector<unsigned char> data(file->st.st_size);
-    FILE* f = ota_fopen(filename, "rb");
+    FILE* f = ota_fopen(filename, "rb+");
     if (f == NULL) {
         printf("failed to open \"%s\": %s\n", filename, strerror(errno));
         return -1;
