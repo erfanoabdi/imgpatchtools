@@ -10,7 +10,7 @@ EXE = .exe
 RM = del
 endif
 
-CFLAGS = -ffunction-sections -std=c++11
+CFLAGS = -ffunction-sections -Wall -Wextra -std=c++11
 LDFLAGS = -Wl
 INC = -I. -I../include/ -Iinclude/
 
