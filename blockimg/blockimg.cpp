@@ -345,7 +345,7 @@ struct NewThreadInfo {
     pthread_cond_t cv;
 };
 
-static bool receive_new_data(const unsigned char* data, long size, void* cookie) {
+static bool receive_new_data(const unsigned char* data, size_t size, void* cookie) {
     NewThreadInfo* nti = reinterpret_cast<NewThreadInfo*>(cookie);
 
     while (size > 0) {
@@ -379,10 +379,10 @@ static bool receive_new_data(const unsigned char* data, long size, void* cookie)
 static void* get_new_data(void* cookie) {
     NewThreadInfo* nti = (NewThreadInfo*) cookie;
     unsigned char* data;
-
     //FIXME: Don't extract on RAM !!
     FILE *rm;
-    long length;
+    size_t length;
+
     rm = fopen(nti->entry, "r");
     fseek (rm, 0, SEEK_END);
     length = ftell (rm);
@@ -1486,7 +1486,8 @@ static int PerformBlockImageUpdate(const char* name, State* state, int argc, cha
 
     //FIXME: Don't extract on RAM !!
     FILE *rm;
-    long length;
+    size_t length;
+
     rm = fopen(patch_data_fn_data, "r");
     fseek (rm, 0, SEEK_END);
     length = ftell (rm);
@@ -1498,7 +1499,6 @@ static int PerformBlockImageUpdate(const char* name, State* state, int argc, cha
         fread (params.patch_start, sizeof(uint8_t), length, rm);
     }
     fclose (rm);
-
 
     params.fd = TEMP_FAILURE_RETRY(open(blockdev_filename_data, O_RDWR));
     unique_fd fd_holder(params.fd);
