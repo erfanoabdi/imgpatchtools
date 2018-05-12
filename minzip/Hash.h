@@ -153,7 +153,7 @@ typedef struct HashIter {
     HashTable*  pHashTable;
     int         idx;
 } HashIter;
-INLINE void mzHashIterNext(HashIter* pIter) {
+void __attribute__ ((weak)) mzHashIterNext(HashIter* pIter) {
     int i = pIter->idx +1;
     int lim = pIter->pHashTable->tableSize;
     for ( ; i < lim; i++) {
@@ -163,15 +163,15 @@ INLINE void mzHashIterNext(HashIter* pIter) {
     }
     pIter->idx = i;
 }
-INLINE void mzHashIterBegin(HashTable* pHashTable, HashIter* pIter) {
+void __attribute__ ((weak)) mzHashIterBegin(HashTable* pHashTable, HashIter* pIter) {
     pIter->pHashTable = pHashTable;
     pIter->idx = -1;
     mzHashIterNext(pIter);
 }
-INLINE bool mzHashIterDone(HashIter* pIter) {
+bool __attribute__ ((weak)) mzHashIterDone(HashIter* pIter) {
     return (pIter->idx >= pIter->pHashTable->tableSize);
 }
-INLINE void* mzHashIterData(HashIter* pIter) {
+void* __attribute__ ((weak)) mzHashIterData(HashIter* pIter) {
     assert(pIter->idx >= 0 && pIter->idx < pIter->pHashTable->tableSize);
     return pIter->pHashTable->pEntries[pIter->idx].data;
 }
