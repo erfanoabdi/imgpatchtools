@@ -12,7 +12,7 @@ RM = del
 RMDIR = rmdir /Q /S
 endif
 
-CFLAGS = -ffunction-sections -O3 -std=c++11
+CFLAGS = -ffunction-sections -std=c++11
 LDFLAGS = -lssl -lcrypto -lz -lbz2 -lpthread
 INC = -I. -Iinclude/ -I../include/ -I/usr/local/include/ -I../
 

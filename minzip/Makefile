@@ -9,7 +9,7 @@ EXE = .exe
 RM = del
 endif
 
-CFLAGS = -ffunction-sections -O3
+CFLAGS = -ffunction-sections
 LDFLAGS = -Wl
 
 UNAME_S := $(shell uname -s)
