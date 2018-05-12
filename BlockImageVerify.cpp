@@ -17,9 +17,12 @@ int main(int argc, char * argv[]) {
     }
 
     State* state;
-    int i;
-    i=BlockImageVerifyFn("BlockImageVerifyFn", state, argc, argv);
+    int ret = BlockImageVerifyFn("BlockImageVerifyFn", state, argc, argv);
+    if (!ret) {
+        std::cout << "Done" << std::endl;
+    } else {
+        std::cout << "Done with error code: " << ret << std::endl;
+    }
 
-    std::cout << "Done with error code : " << i << "\n";
     return 0;
 }

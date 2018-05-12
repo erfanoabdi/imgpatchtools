@@ -133,9 +133,13 @@ int main(int argc, char * argv[]) {
     }
     
     State* state;
-    int i;
-    i=ApplyPatchFn("ApplyPatchFn", state, argc, argv);
-    
-    std::cout << "Done with error code : " << i << "\n";
+
+    int ret = ApplyPatchFn("ApplyPatchFn", state, argc, argv);
+    if (!ret) {
+        std::cout << "Done" << std::endl;
+    } else {
+        std::cout << "Done with error code: " << ret << std::endl;
+    }
+
     return 0;
 }
