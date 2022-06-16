@@ -1044,15 +1044,6 @@ static int LoadSrcTgtVersion3(CommandParameters& params, RangeSet& tgt, size_t& 
 
     std::vector<uint8_t> tgtbuffer(tgt.size * BLOCKSIZE);
 
-    if (ReadBlocks(tgt, tgtbuffer, params.fd) == -1) {
-        return -1;
-    }
-
-    if (VerifyBlocks(tgthash, tgtbuffer, tgt.size, false) == 0) {
-        // Target blocks already have expected content, command should be skipped
-        return 1;
-    }
-
     if (VerifyBlocks(srchash, params.buffer, src_blocks, true) == 0) {
         // If source and target blocks overlap, stash the source blocks so we can
         // resume from possible write errors. In verify mode, we can skip stashing
