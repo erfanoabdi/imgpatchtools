@@ -13,9 +13,11 @@ For Building this tool you need :
 * zlib
 * libbz2
 * openssl
-
+ 
+```
+sudo apt install libbz2-dev libssl-dev
+```
 It currently supports Linux x86/x64 & MacOS, Not tested on Windows.
-
 
 ## Usage
 ```
